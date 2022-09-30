@@ -17,6 +17,12 @@ public class Duke {
                 TaskManager.markAsDone(input, TaskManager.tasks);
             } else if (input.startsWith("unmark")) {
                 TaskManager.markAsNotDone(input, TaskManager.tasks);
+            } else if (input.equals("todo")) {
+                System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+            } else if (input.equals("deadline")) {
+                System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+            } else if (input.equals("event")) {
+                System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
             } else if (input.startsWith("todo")) {
                 TaskManager.addTodo(input, TaskManager.tasks);
             } else if (input.startsWith("deadline")) {
@@ -24,7 +30,7 @@ public class Duke {
             } else if (input.startsWith("event")) {
                 TaskManager.addEvent(input, TaskManager.tasks);
             } else {
-                System.out.println("Please enter a valid command.");
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
             System.out.println();
             input = in.nextLine();

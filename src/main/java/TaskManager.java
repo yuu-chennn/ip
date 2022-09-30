@@ -13,29 +13,37 @@ public class TaskManager {
     }
 
     public static void addDeadline(String input, ArrayList<Task> tasks) {
-        int indexSlash = input.indexOf('/');
-        if (indexSlash == -1) {
-            return;
+        try {
+            int indexSlash = input.indexOf('/');
+            if (indexSlash == -1) {
+                return;
+            }
+            Deadline d = new Deadline(input.substring(9, indexSlash), input.substring(indexSlash + 1));
+            tasks.add(d);
+            d.taskNum = tasks.size();
+            d.isDone = false;
+            System.out.println("Got it. I've added this task: \n" + d);
+            System.out.println("Now you have " + d.taskNum + " tasks in the list.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Array Index Out Of Bounds");
         }
-        Deadline d = new Deadline(input.substring(9, indexSlash), input.substring(indexSlash + 1));
-        tasks.add(d);
-        d.taskNum = tasks.size();
-        d.isDone = false;
-        System.out.println("Got it. I've added this task: \n" + d);
-        System.out.println("Now you have " + d.taskNum + " tasks in the list.");
     }
 
     public static void addEvent(String input, ArrayList<Task> tasks) {
-        int indexSlash = input.indexOf('/');
-        if (indexSlash == -1) {
-            return;
+        try {
+            int indexSlash = input.indexOf('/');
+            if (indexSlash == -1) {
+                return;
+            }
+            Event e = new Event(input.substring(6, indexSlash), input.substring(indexSlash + 1));
+            tasks.add(e);
+            e.taskNum = tasks.size();
+            e.isDone = false;
+            System.out.println("Got it. I've added this task: \n" + e);
+            System.out.println("Now you have " + e.taskNum + " tasks in the list.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Array Index Out Of Bounds");
         }
-        Event e = new Event(input.substring(6, indexSlash), input.substring(indexSlash + 1));
-        tasks.add(e);
-        e.taskNum = tasks.size();
-        e.isDone = false;
-        System.out.println("Got it. I've added this task: \n" + e);
-        System.out.println("Now you have " + e.taskNum + " tasks in the list.");
     }
 
     public static void list(ArrayList<Task> tasks) {
