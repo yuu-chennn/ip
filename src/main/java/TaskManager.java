@@ -78,4 +78,13 @@ public class TaskManager {
             System.out.println("OK, I've marked this task as not done yet: \n\t[ ] " + tasks.get(markNum).taskNum);
         }
     }
+    public static void deleteTask(String input, ArrayList<Task> tasks) {
+        int taskNum = Integer.parseInt(input.substring(input.length() - 1));
+        taskNum--;
+        if (taskNum >= 0 && taskNum < tasks.size()) {
+            System.out.println("Noted. I've removed this task:\n" + tasks.get(taskNum).toString());
+            tasks.remove(taskNum);
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        }
+    }
 }
