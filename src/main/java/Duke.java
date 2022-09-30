@@ -29,6 +29,8 @@ public class Duke {
                 TaskManager.addDeadline(input, TaskManager.tasks);
             } else if (input.startsWith("event")) {
                 TaskManager.addEvent(input, TaskManager.tasks);
+            } else if (input.startsWith("delete")) {
+                TaskManager.deleteTask(input, TaskManager.tasks);
             } else {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
