@@ -1,8 +1,12 @@
+package duke;
+
+import duke.command.TaskManager;
+
 import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        String greeting = "Hello! I'm Duke\n"
+        String greeting = "Hello! I'm duke.Duke\n"
                         + "What can I do for you?\n";
         System.out.println(greeting);
         Scanner in = new Scanner(System.in);
