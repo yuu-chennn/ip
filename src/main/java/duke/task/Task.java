@@ -1,7 +1,9 @@
+package duke.task;
+
 public class Task {
-    protected String taskName;
-    protected int taskNum;
-    protected boolean isDone;
+    public String taskName;
+    public int taskNum;
+    public boolean isDone;
 
     public Task(String taskName) {
         this.taskName = taskName;

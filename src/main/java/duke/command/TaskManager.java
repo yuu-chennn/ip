@@ -1,4 +1,4 @@
-package duke;
+package duke.command;
 
 import duke.task.Deadline;
 import duke.task.Event;
@@ -15,7 +15,7 @@ public class TaskManager {
         tasks.add(t);
         t.taskNum = tasks.size();
         t.isDone = false;
-        System.out.println("Got it. I've added this task: \n" + t);
+        System.out.println("Got it. I've added this task: \n\t" + t);
         System.out.println("Now you have " + t.taskNum + " tasks in the list.");
     }
 
@@ -29,7 +29,7 @@ public class TaskManager {
             tasks.add(d);
             d.taskNum = tasks.size();
             d.isDone = false;
-            System.out.println("Got it. I've added this task: \n" + d);
+            System.out.println("Got it. I've added this task: \n\t" + d);
             System.out.println("Now you have " + d.taskNum + " tasks in the list.");
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error: Array Index Out Of Bounds");
@@ -46,7 +46,7 @@ public class TaskManager {
             tasks.add(e);
             e.taskNum = tasks.size();
             e.isDone = false;
-            System.out.println("Got it. I've added this task: \n" + e);
+            System.out.println("Got it. I've added this task: \n\t" + e);
             System.out.println("Now you have " + e.taskNum + " tasks in the list.");
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error: Array Index Out Of Bounds");
@@ -56,33 +56,29 @@ public class TaskManager {
     public static void list(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list: \n");
         for (Task task : tasks) {
-            System.out.print(task.taskNum + ". [");
+            System.out.print(task.taskNum + ". ");
             if (task instanceof Todo) {
-                System.out.print("T] ");
+                System.out.println(task);
             } else if (task instanceof Deadline) {
-                System.out.print("D] ");
+                System.out.println(task);
             } else if (task instanceof Event) {
-                System.out.print("E] ");
-            }
-            if (task.isDone) {
-                System.out.println("[X] " + task.taskName);
-            } else {
-                System.out.println("[ ] " + task.taskName);
+                System.out.println(task);
             }
         }
     }
+
     public static void markAsDone(String input, ArrayList<Task> tasks) {
         int markNum = Integer.parseInt(input.substring(input.length() - 1)) - 1;
         if (markNum < tasks.size()) {
             tasks.get(markNum).isDone = true;
-            System.out.println("Nice! I've marked this task as done: \n\t[X] " + tasks.get(markNum).taskNum);
+            System.out.println("Nice! I've marked this task as done: \n\t" + tasks.get(markNum));
         }
     }
     public static void markAsNotDone(String input, ArrayList<Task> tasks) {
         int markNum = Integer.parseInt(input.substring(input.length() - 1)) - 1;
         if (markNum < tasks.size() && tasks.get(markNum).isDone) {
             tasks.get(markNum).isDone = false;
-            System.out.println("OK, I've marked this task as not done yet: \n\t[ ] " + tasks.get(markNum).taskNum);
+            System.out.println("OK, I've marked this task as not done yet: \n\t" + tasks.get(markNum));
         }
     }
 }
