@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Todo extends Task {
     public Todo(String taskName) {
         super(taskName);
@@ -5,6 +7,6 @@ public class Todo extends Task {
 
     @Override
     public String toString() {
-        return "    [T]" + super.toString() + "";
+        return "[T] " + super.toString() + "";
     }
 }

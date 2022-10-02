@@ -1,8 +1,12 @@
+package duke;
+
+import duke.command.TaskManager;
+
 import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        String greeting = "Hello! I'm Duke\n"
+        String greeting = "Hello! I'm duke.Duke\n"
                         + "What can I do for you?\n";
         System.out.println(greeting);
         Scanner in = new Scanner(System.in);
@@ -29,6 +33,8 @@ public class Duke {
                 TaskManager.addDeadline(input, TaskManager.tasks);
             } else if (input.startsWith("event")) {
                 TaskManager.addEvent(input, TaskManager.tasks);
+            } else if (input.startsWith("delete")) {
+                TaskManager.deleteTask(input, TaskManager.tasks);
             } else {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
