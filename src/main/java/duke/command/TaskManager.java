@@ -90,13 +90,4 @@ public class TaskManager {
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         }
     }
-    public static void deleteTask(String input, ArrayList<Task> tasks) {
-        int taskNum = Integer.parseInt(input.substring(input.length() - 1));
-        taskNum--;
-        if (taskNum >= 0 && taskNum < tasks.size()) {
-            System.out.println("Noted. I've removed this task:\n" + tasks.get(taskNum).toString());
-            tasks.remove(taskNum);
-            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        }
-    }
 }
