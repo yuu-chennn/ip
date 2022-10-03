@@ -1,12 +1,12 @@
 package duke.task;
 
 public class Task {
-    public String taskName;
-    public int taskNum;
+    public String name;
+    public int num;
     public boolean isDone;
 
-    public Task(String taskName) {
-        this.taskName = taskName;
+    public Task(String name) {
+        this.name = name;
         this.isDone = false;
     }
 
@@ -19,6 +19,6 @@ public class Task {
     }
 
     public String toString() {
-        return "[" + getStatus() + "] " + taskName;
+        return "[" + getStatus() + "] " + name;
     }
 }
