@@ -49,6 +49,9 @@ public class TaskManager {
             case "delete":
                 deleteTask(input, tasks);
                 break;
+            case "find":
+                findTask(input, tasks);
+                break;
         }
     }
 
@@ -210,6 +213,20 @@ public class TaskManager {
             // Save the tasks in the hard disk automatically whenever the task list changes.
             FileManager.fileUpdate();
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        }
+    }
+
+    public static void findTask(String input, ArrayList<Task> tasks) {
+        ArrayList<Task> found = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.name.contains(input)) {
+                found.add(task);
+            }
+        }
+        if(found.size() != 0) {
+            list(found);
+        } else {
+            System.out.println("☹ OOPS!!! No tasks matched the keyword :-(");
         }
     }
 }
