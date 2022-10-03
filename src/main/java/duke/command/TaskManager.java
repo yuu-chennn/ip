@@ -7,7 +7,6 @@ import duke.task.Todo;
 
 import java.util.ArrayList;
 import java.io.IOException;
-import java.lang.IndexOutOfBoundsException;
 
 public class TaskManager {
     public static ArrayList<Task> tasks = new ArrayList<>();
@@ -161,10 +160,12 @@ public class TaskManager {
 
     public static void list(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list: \n");
+        int i = 0;
         for (Task task : tasks) {
-            System.out.print(task.num + ". " + task + "\n");
-            FileManager.fileUpdate();
+            i++;
+            System.out.print(i + ". " + task + "\n");
         }
+        FileManager.fileUpdate();
     }
 
     public static void markAsDone(String input, ArrayList<Task> tasks) {
@@ -192,7 +193,7 @@ public class TaskManager {
             FileManager.fileUpdate();
             System.out.println("OK, I've marked this task as not done yet: \n\t" + tasks.get(markNum));
         } else {
-            System.out.println("Oops! This task is already marked as not done: \n\t" + tasks.get(markNum));
+            System.out.println("☹ OOPS!!! This task is already marked as not done: \n\t" + tasks.get(markNum));
         }
     }
     public static void deleteTask(String input, ArrayList<Task> tasks) {
@@ -202,6 +203,10 @@ public class TaskManager {
         } else {
             System.out.println("Noted. I've removed this task:\n\t" + tasks.get(taskNum));
             tasks.remove(taskNum);
+            // Reassign task numbers
+            for (int i = taskNum + 1; i < tasks.size(); i++) {
+                tasks.get(i).num = i - 1;
+            }
             // Save the tasks in the hard disk automatically whenever the task list changes.
             FileManager.fileUpdate();
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
