@@ -210,4 +210,23 @@ public class TaskList {
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         }
     }
+
+    /**
+     * Method to find a task in the task list by searching for a key word as instructed by the find command
+     * @param input key word to be searched for, from user input
+     * @param tasks task list containing the tasks
+     */
+    public static void findTask(String input, ArrayList<Task> tasks) {
+        ArrayList<Task> found = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.name.contains(input)) {
+                found.add(task);
+            }
+        }
+        if(found.size() != 0) {
+            list(found);
+        } else {
+            System.out.println("☹ OOPS!!! No tasks matched the keyword :-(");
+        }
+    }
 }
