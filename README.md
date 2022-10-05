@@ -32,10 +32,11 @@ Setting up your application in Intellij.
 - Type the command in the command box and press Enter to execute it. e.g. typing help and pressing Enter will open the help window.
   Some example commands you can try:
 
-  - `todo watch lecture` : Adds a todo "watch lecture" to the Task List. 
-  - `deadline cs2113t assignment/friday 2359` : Adds a deadline "cs2113t assignment" due by "friday 2359" to the Task List.
-  - `event mom's birthday/tuesday 6pm` : Adds an event "mom's birthday" at "tuesday 6pm" to the Task List.
+  - `todo watch lecture` : Adds a todo `watch lecture` to the Task List. 
+  - `deadline cs2113t assignment/friday 2359` : Adds a deadline `cs2113t assignment` due by `friday 2359` to the Task List.
+  - `event mom's birthday/tuesday 6pm` : Adds an event `mom's birthday` at `tuesday 6pm` to the Task List.
   - `list` : Lists all tasks.
+  - `find lecture` : Searches for all tasks in Task List with keyword `lecture`.
   - `delete 1` : Deletes the 1st task shown in the current list. 
   - `mark 2` : Marks the 2nd task shown in the current list as done.
   - `unmark 2` : Marks the 2nd task shown in the current list as not done.
@@ -96,7 +97,7 @@ Got it. I've added this task:
 Now you have 3 tasks in the list.
 ```
 
-### `list` - List all tasks
+### `list` : List all tasks
 Generates a list of all tasks currently saved in the Task List.
 
 Example of usage:
@@ -111,6 +112,23 @@ Here are the tasks in your list:
 1. [T] [ ] watch lecture
 2. [D] [ ] cs2113t assignment (by: friday 2359)
 3. [E] [ ] mom's birthday (at: tuesday 6pm)
+```
+
+### `find KEYWORD` : find a task
+Find a task by searching for a keyword
+
+Example of usage:
+
+`find lecture`
+
+Expected outcome:
+
+Generates all tasks in Task List with keyword `lecture`.
+
+```
+Here are the tasks in your list: 
+
+1. [T] [ ] watch lecture
 ```
 
 ### `delete INDEX` : Delete a task
