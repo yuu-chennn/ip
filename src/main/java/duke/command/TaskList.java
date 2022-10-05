@@ -6,67 +6,24 @@ import duke.task.Task;
 import duke.task.Todo;
 
 import java.util.ArrayList;
-import java.io.IOException;
+import java.util.Objects;
 
-public class TaskManager {
+/**
+ * Class that handles tasks and carries out the appropriate action as instructed by parser
+ */
+public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
-
-    public static void stringProcessor(String input, ArrayList<Task> tasks) throws IOException {
-        String command;
-        if (input.contains(" ")) {
-            command = input.substring(0, input.indexOf(" "));
-            String removeCommand = input.substring(input.indexOf(" ") + 1);
-            removeCommand.trim();
-            handleUserInput(removeCommand, command);
-        } else if (input.contains("\t")) {
-            command = input.substring(1, input.indexOf(" "));
-            String removeCommand = input.substring(input.indexOf(" ") + 1);
-            removeCommand.trim();
-            handleFileData(removeCommand, command);
-        } else if (input.equals("list")){
-            list(tasks);
-        } else {
-            System.out.println("☹ OOPS!!! Please use the correct format :-(");
-        }
-    }
-    public static void handleUserInput(String input, String command) {
-        switch(command) {
-            case "mark":
-                markAsDone(input, tasks);
-                break;
-            case "unmark":
-                markAsNotDone(input, tasks);
-                break;
-            case "todo":
-                addTodo(input, tasks);
-                break;
-            case "deadline":
-                addDeadline(input, tasks);
-                break;
-            case "event":
-                addEvent(input, tasks);
-                break;
-            case "delete":
-                deleteTask(input, tasks);
-                break;
-        }
-    }
-
-    public static void handleFileData(String input, String command) {
-        switch(command) {
-            case "[T]":
-                addTodo(input, tasks);
-                break;
-            case "[D]":
-                addDeadline(input, tasks);
-                break;
-            case "[E]":
-                addEvent(input, tasks);
-                break;
-        }
-    }
+    /**
+     * Method to add a todo from user input or saved file data
+     * Saves new data into file
+     * @param input user input or saved file date without command
+     * @param tasks task list containing the tasks
+     */
     public static void addTodo(String input, ArrayList<Task> tasks) {
-        if (input.startsWith("[ ]")) {
+        if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
+            System.out.println("☹ OOPS!!! Please use the correct format :-(");
+            return;
+        } else if (input.startsWith("[ ]")) {
             Todo t = new Todo(input.substring(4));
             tasks.add(t);
             t.num = tasks.size();
@@ -85,15 +42,20 @@ public class TaskManager {
             System.out.println("Now you have " + t.num + " tasks in the list.");
         }
         // Save the tasks in the hard disk automatically whenever the task list changes.
-        FileManager.fileUpdate();
-
-
+        Storage.fileUpdate();
     }
-
+    /**
+     * Method to add a deadline from user input or saved file data
+     * Saves new data into file
+     * @param input user input or saved file date without command
+     * @param tasks task list containing the tasks
+     */
     public static void addDeadline(String input, ArrayList<Task> tasks) {
         try {
-
-            if (input.startsWith("[ ]")) {
+            if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
+                System.out.println("☹ OOPS!!! Please use the correct format :-(");
+                return;
+            } else if (input.startsWith("[ ]")) {
                 int indexDelimiter = input.indexOf("(by: ");
                 Deadline d = new Deadline(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 5));
                 tasks.add(d);
@@ -118,16 +80,23 @@ public class TaskManager {
                 System.out.println("Now you have " + d.num + " tasks in the list.");
             }
             // Save the tasks in the hard disk automatically whenever the task list changes.
-            FileManager.fileUpdate();
+            Storage.fileUpdate();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error: Array Index Out Of Bounds");
         }
     }
-
+    /**
+     * Method to add a event from user input or saved file data
+     * Saves new data into file
+     * @param input user input or saved file date without command
+     * @param tasks task list containing the tasks
+     */
     public static void addEvent(String input, ArrayList<Task> tasks) {
         try {
-
-            if (input.startsWith("[ ]")) {
+            if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
+                System.out.println("☹ OOPS!!! Please use the correct format :-(");
+                return;
+            } else if (input.startsWith("[ ]")) {
                 int indexDelimiter = input.indexOf("(at: ");
                 Event e = new Event(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 5));
                 tasks.add(e);
@@ -152,12 +121,16 @@ public class TaskManager {
                 System.out.println("Now you have " + e.num + " tasks in the list.");
             }
             // Save the tasks in the hard disk automatically whenever the task list changes.
-            FileManager.fileUpdate();
+            Storage.fileUpdate();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error: Array Index Out Of Bounds");
         }
     }
-
+    /**
+     * Method to print a list from saved file data
+     * @param input user input or saved file date without command
+     * @param tasks task list containing the tasks
+     */
     public static void list(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list: \n");
         int i = 0;
@@ -165,10 +138,17 @@ public class TaskManager {
             i++;
             System.out.print(i + ". " + task + "\n");
         }
-        FileManager.fileUpdate();
     }
-
+    /**
+     * Method to mark a task in the task list as instructed by the mark command
+     * @param input task number to be marked, from user input
+     * @param tasks task list containing the tasks
+     */
     public static void markAsDone(String input, ArrayList<Task> tasks) {
+        if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
+            System.out.println("☹ OOPS!!! Please use the correct format :-(");
+            return;
+        }
         int markNum = Integer.parseInt(input) - 1;
         if (markNum < 0 || markNum >= tasks.size()) {
             System.out.println("Please enter an existing task number.");
@@ -176,13 +156,22 @@ public class TaskManager {
         else if (!tasks.get(markNum).isDone) {
             tasks.get(markNum).isDone = true;
             // Save the tasks in the hard disk automatically whenever the task list changes.
-            FileManager.fileUpdate();
+            Storage.fileUpdate();
             System.out.println("Nice! I've marked this task as done: \n\t" + tasks.get(markNum));
         } else {
             System.out.println("Oops! This task is already marked as done: \n\t" + tasks.get(markNum));
         }
     }
+    /**
+     * Method to unmark a task in the task list as instructed by the unmark command
+     * @param input task number to be unmarked, from user input
+     * @param tasks task list containing the tasks
+     */
     public static void markAsNotDone(String input, ArrayList<Task> tasks) {
+        if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
+            System.out.println("☹ OOPS!!! Please use the correct format :-(");
+            return;
+        }
         int markNum = Integer.parseInt(input) - 1;
         if (markNum < 0 || markNum >= tasks.size()) {
             System.out.println("Please enter an existing task number.");
@@ -190,13 +179,22 @@ public class TaskManager {
         else if (tasks.get(markNum).isDone) {
             tasks.get(markNum).isDone = false;
             // Save the tasks in the hard disk automatically whenever the task list changes.
-            FileManager.fileUpdate();
+            Storage.fileUpdate();
             System.out.println("OK, I've marked this task as not done yet: \n\t" + tasks.get(markNum));
         } else {
             System.out.println("☹ OOPS!!! This task is already marked as not done: \n\t" + tasks.get(markNum));
         }
     }
+    /**
+     * Method to delete a task in the task list as instructed by the delete command
+     * @param input task number to be deleted, from user input
+     * @param tasks task list containing the tasks
+     */
     public static void deleteTask(String input, ArrayList<Task> tasks) {
+        if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
+            System.out.println("☹ OOPS!!! Please use the correct format :-(");
+            return;
+        }
         int taskNum = Integer.parseInt(input) - 1;
         if (taskNum < 0 || taskNum >= tasks.size()) {
             System.out.println("Please enter an existing task number.");
@@ -208,7 +206,7 @@ public class TaskManager {
                 tasks.get(i).num = i - 1;
             }
             // Save the tasks in the hard disk automatically whenever the task list changes.
-            FileManager.fileUpdate();
+            Storage.fileUpdate();
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         }
     }

@@ -7,7 +7,10 @@ public class Deadline extends Task {
         super(name);
         this.due = due;
     }
-
+    /**
+     * Method to print deadline
+     * @return deadline in print format
+     */
     @Override
     public String toString() {
         return "[D] " + super.toString() + " (by: " + due + ")";

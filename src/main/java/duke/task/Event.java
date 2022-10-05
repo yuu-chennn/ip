@@ -7,7 +7,10 @@ public class Event extends Task {
         super(name);
         this.time = time;
     }
-
+    /**
+     * Method to print event
+     * @return event in print format
+     */
     @Override
     public String toString() {
         return "[E] " + super.toString() + " (at: " + time + ")";
