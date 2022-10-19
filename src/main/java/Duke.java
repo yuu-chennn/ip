@@ -1,8 +1,9 @@
 import duke.command.Ui;
+import duke.exception.ParserException;
 
 import static duke.command.Parser.stringProcessor;
 import static duke.command.Storage.fileReader;
-import static duke.command.TaskList.tasks;
+import static duke.command.TaskManager.tasks;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -25,8 +26,8 @@ public class Duke {
             } else {
                 try {
                     stringProcessor(input, tasks);
-                } catch (IOException e) {
-                    System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                } catch (ParserException.StringProcessorException e) {
+                    System.out.println(e.getMessage());
                 }
             }
             System.out.println();

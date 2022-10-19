@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * Class that handles tasks and carries out the appropriate action as instructed by parser
  */
-public class TaskList {
+public class TaskManager {
     public static ArrayList<Task> tasks = new ArrayList<>();
     /**
      * Method to add a todo from user input or saved file data
@@ -50,20 +50,20 @@ public class TaskList {
      * @param input user input or saved file date without command
      * @param tasks task list containing the tasks
      */
-    public static void addDeadline(String input, ArrayList<Task> tasks) {
+    public static void addDeadline(String input, ArrayList<Task> tasks){
         try {
             if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
                 System.out.println("☹ OOPS!!! Please use the correct format :-(");
                 return;
             } else if (input.startsWith("[ ]")) {
-                int indexDelimiter = input.indexOf("(by: ");
-                Deadline d = new Deadline(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 5));
+                int indexDelimiter = input.indexOf(" (by: ");
+                Deadline d = new Deadline(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 6, input.lastIndexOf(")") - 1));
                 tasks.add(d);
                 d.num = tasks.size();
                 d.isDone = false;
             } else if (input.startsWith("[X]")) {
-                int indexDelimiter = input.indexOf("(by: ");
-                Deadline d = new Deadline(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 5));
+                int indexDelimiter = input.indexOf(" (by: ");
+                Deadline d = new Deadline(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 6, input.lastIndexOf(")") - 1));
                 tasks.add(d);
                 d.num = tasks.size();
                 d.isDone = true;
@@ -81,8 +81,8 @@ public class TaskList {
             }
             // Save the tasks in the hard disk automatically whenever the task list changes.
             Storage.fileUpdate();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error: Array Index Out Of Bounds");
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
         }
     }
     /**
@@ -97,14 +97,14 @@ public class TaskList {
                 System.out.println("☹ OOPS!!! Please use the correct format :-(");
                 return;
             } else if (input.startsWith("[ ]")) {
-                int indexDelimiter = input.indexOf("(at: ");
-                Event e = new Event(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 5));
+                int indexDelimiter = input.indexOf(" (at: ");
+                Event e = new Event(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 6, input.lastIndexOf(")") - 1));
                 tasks.add(e);
                 e.num = tasks.size();
                 e.isDone = false;
             } else if (input.startsWith("[X]")) {
-                int indexDelimiter = input.indexOf("(at: ");
-                Event e = new Event(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 5));
+                int indexDelimiter = input.indexOf(" (at: ");
+                Event e = new Event(input.substring(4, indexDelimiter), input.substring(indexDelimiter + 6, input.lastIndexOf(")") - 1));
                 tasks.add(e);
                 e.num = tasks.size();
                 e.isDone = true;
@@ -122,13 +122,12 @@ public class TaskList {
             }
             // Save the tasks in the hard disk automatically whenever the task list changes.
             Storage.fileUpdate();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error: Array Index Out Of Bounds");
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
         }
     }
     /**
      * Method to print a list from saved file data
-     * @param input user input or saved file date without command
      * @param tasks task list containing the tasks
      */
     public static void list(ArrayList<Task> tasks) {
@@ -144,7 +143,7 @@ public class TaskList {
      * @param input task number to be marked, from user input
      * @param tasks task list containing the tasks
      */
-    public static void markAsDone(String input, ArrayList<Task> tasks) {
+    public static void markAsDone(String input, ArrayList<Task> tasks) throws NumberFormatException {
         if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
             System.out.println("☹ OOPS!!! Please use the correct format :-(");
             return;
@@ -167,7 +166,7 @@ public class TaskList {
      * @param input task number to be unmarked, from user input
      * @param tasks task list containing the tasks
      */
-    public static void markAsNotDone(String input, ArrayList<Task> tasks) {
+    public static void markAsNotDone(String input, ArrayList<Task> tasks) throws NumberFormatException {
         if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
             System.out.println("☹ OOPS!!! Please use the correct format :-(");
             return;
@@ -190,7 +189,7 @@ public class TaskList {
      * @param input task number to be deleted, from user input
      * @param tasks task list containing the tasks
      */
-    public static void deleteTask(String input, ArrayList<Task> tasks) {
+    public static void deleteTask(String input, ArrayList<Task> tasks) throws NumberFormatException {
         if (Objects.equals(input, "") || Objects.equals(input, " ") || Objects.equals(input, "\t")) {
             System.out.println("☹ OOPS!!! Please use the correct format :-(");
             return;

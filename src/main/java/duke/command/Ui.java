@@ -16,6 +16,8 @@ public class Ui {
     public static final String DASH =
             "________________________________________________________________________________________________________________________\n";
 
+    public static final String MESSAGE = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+
     /**
      * Method to greet user
      */
